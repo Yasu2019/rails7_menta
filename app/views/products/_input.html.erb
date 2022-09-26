@@ -1,0 +1,173 @@
+
+
+<% @product.documenttype='製品' %>
+
+
+<% if @product.start_time==nil %>
+  <% dateset_start_time=Time.now %>
+<% else %>
+  <% dateset_start_time=@product.start_time %>
+<% end %>
+
+<% if @product.deadline_at==nil %>
+  <% dateset_deadline_at=Time.now %>
+<% else %>
+  <% dateset_deadline_at=@product.deadline_at %>
+<% end %>
+
+<% if @product.end_at==nil %>
+  <% dateset_end_at=Time.now %>
+<% else %>
+  <% dateset_end_at=@product.end_at %>
+<% end %>
+
+
+<%= form_with model: @product, local: true do |form| %>
+
+<%= render 'layouts/error_messages', model: form.object %>
+
+
+
+<div class=”container>
+   <div class="row align-items-end">
+
+     <div class="col-4">
+       <p>図番</p> <%= form.text_field :partnumber %>  
+     </div>
+
+     <div class="col-4">
+     <p>材料コード</p> <%= form.text_field :materialcode %>
+     </div>
+
+     <div class="col-4"> 
+     <p>コメント</p> <%= form.text_field :description %> 
+     </div>
+
+   </div>
+</div>
+
+<br>
+
+<div class=”container>
+   <div class="row align-items-end">
+
+     <div class="col-3">
+     <%= form.label :APQPフェーズを選択してください %> <br>
+     <%= form.select :phase, [['フェーズ1', 'フェーズ1'], ['フェーズ2', 'フェーズ2'],['フェーズ3', 'フェーズ3'],['フェーズ4', 'フェーズ4'],['フェーズ5', 'フェーズ5'],['PPAP', 'PPAP'],['8.3製品の設計・開発','8.3製品の設計・開発']], { include_blank: '選択してください' }, { id: "phase" ,required: true} %> 
+     </div>
+
+     <div class="col-3">
+
+     <% if @product.food!=nil %>
+         <%= form.label :項目を選択してください %> <br>
+         <% food_test=[[@product.food,@product.food]]%>
+         
+         <%= form.select :food, food_test, { include_blank: @product.food,selected:@product.food  } , { id: "food",required: true }  %>
+     <% else %>
+         <%= form.label :項目を選択してください %> <br>  
+         <%= form.select :food, [], {include_blank: '選択してください' } , { id: "food",required: true }  %>
+     <% end %>
+
+
+     </div>
+   </div>
+</div>
+
+<br>
+
+<div class=”container>
+   <div class="row align-items-end">
+
+     <div class="col-3">
+     <%= form.label :登録日 %> <br>
+     
+
+     <%= form.date_field :start_time, value: dateset_start_time.strftime("%Y-%m-%d") %>
+     </div>
+
+
+
+     <div class="col-3">
+     <%= form.label :完了予定日 %> <br>
+     <%= form.date_field :deadline_at, value:  dateset_deadline_at.strftime("%Y-%m-%d") %>
+     </div>
+
+     <div class="col-3">
+     <%= form.label :完了日 %> <br>
+     <%= form.date_field :end_at, value:  dateset_end_at.strftime("%Y-%m-%d") %>
+     </div>
+
+   </div>
+</div>
+
+  <% if @product.status=="完了" %>
+  <% num=100 %>
+  <% else %>
+  <% num=50 %>
+  <% end %>
+
+
+
+  <div>
+  <br>
+  <%= form.label :達成度を入力してください %> <br>
+  <%= form.number_field :goal_attainment_level, value: num %>
+  </div>
+
+
+
+  <div>
+  <br>
+  <%= form.label :ステイタスを入力してください %> <br>
+  <%= form.select :status, [['未完', '未完'],['仕掛中', '仕掛中'], ['完了', '完了']], { include_blank: '選択してください'}, { id: "status",required: true } %> <br>
+  </div>
+  
+  <div>
+  <br>
+  <%= form.label :ドキュメントタイプ %> <br>
+  <%= form.select :documenttype, [['製品', '製品']], { include_blank: '製品'}, { id: "documenttype" } %> <br>
+  </div>
+  
+
+  <br>
+
+<div class=”container>
+   <div class="row align-items-start">
+
+     <div class="col-4">
+     <% if @product.files.attached? %>
+       <%= form.label :添付ファイルを削除する場合、ㇾチェックしてください %><br>
+          <% @product.files.each do |image| %>
+          <%= form.check_box :detouch, {:multiple => true}, image.id, false  %> 
+          <%= image.blob.filename %> <br>
+       <% end %>
+     <% end %>
+     </div>
+
+     <div class="col-3">
+
+     <% if @product.files.attached? && @Attachment_file %> 
+       <% @product.files.each do |image| %>
+          <%= image.blob.filename %> <br>
+          <%= image_tag image.variant(resize: "100x100") %>
+       <% end %>
+     <% end %>
+     </div>
+  <br>
+
+   </div>
+</div>
+
+
+  <br>
+  <%= form.file_field :files, multiple: true %> 
+  <br>
+  <br>
+  <%= form.submit %> <br>
+  <br>
+  <%= link_to '戻る', products_path,class:"btn btn-secondary" %>
+
+<% end %>
+
+
+   

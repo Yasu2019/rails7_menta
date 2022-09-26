@@ -1,0 +1,87 @@
+<head>
+<h1>IATF APQP / PPAP タイムライン</h1>
+<%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
+
+</head>
+
+<div class="container-fluid">
+  	<div class="row">
+    <div class="col-6 center-contents">
+     <% koumoku=["本日","品質マニュアル", "付表1-1プロセスー組織対応表", "付表2-1プロセスー規格要求事項対応表", "付表3-1プロセスー顧客固有要求事項対応表", "付表4-1文書（記録を含む)体系表", "付図1-1品質マネジメントシステム体系図", "付図2-1プロセスマップ", "付図3-1製品実現プロセス体系図", "文書体系表による必要な文書の洗い出し", "新規プロセス管理図作成", "現行手順書見直し", "文書体系表による必要記録の洗い出し", "現行記録様式の見直し","プロセスの評価指標の決定","プロセスの評価指標の監視・測定","現行記録の取得","新規記録の取得"] %>
+      <br>
+      <strong><font size="5">文書計画</font></strong>
+      <%= render partial: "form_timeline", locals: { products: @products, koumoku:koumoku } %>
+	  </div>
+  
+    <div class="col-6 center-contents">		
+      <% koumoku=["本日","営業プロセス管理図", "製造工程設計プロセス管理図", "製造プロセス管理図", "製品検査・引渡しプロセス管理図", "教育・訓練プロセス管理図", "設備管理プロセス管理図", "計測機器管理プロセス管理図", "購買プロセス管理図", "方針管理プロセス管理図", "顧客満足プロセス管理図", "内部監査プロセス管理図", "改善プロセス管理図"] %>
+      <br>
+      <strong><font size="5">プロセス管理図</font></strong>   
+      <%= render partial: "form_timeline", locals: { products: @products, koumoku:koumoku } %>
+		</div>
+
+    
+
+	<div class="row">
+    <div class="col-6 center-contents">
+      <% koumoku=["本日","QK001文書管理規定", "QK002記録管理規定", "QK003内部監査規定", "QK004不適合品管理規定", "QK006検査機器管理規定", "QK007設備管理規定", "QK008供給者評価・選定規定", "QK009図面管理規定", "QK012提案制度運営規定", "QK013変更管理規定", "コンプライアンス規定","緊急事態対応規定","安全衛生管理規定"]  %>
+      <br>
+      <strong><font size="5">規定</font></strong>
+
+      <%= render partial: "form_timeline", locals: { products: @products, koumoku:koumoku } %>
+		</div>
+
+  <div class="col-6 center-contents">	
+      <% koumoku=["本日","営業プロセスフロー", "製造工程設計プロセスフロー", "製造プロセスフロー", "製品検査・引渡しプロセスフロー"] %>
+      <br>
+      <strong><font size="5">フロー</font></strong>
+
+      <%= render partial: "form_timeline", locals: { products: @products, koumoku:koumoku } %>
+		</div>
+    
+   <div class="row">
+   <div class="col-6 center-contents">
+      <% koumoku=["本日","QC工程図作成手順", "管理図・作成管理手順", "工程FMEA実施手順", "工程能力算出手順", "作業の段取り替え検証手順", "生産用冶工具管理手順", "測定システム管理手順", "特殊特性等設定・管理手順", "外部提供者における品質保証の手引き", "外部提供者品質監査手順", "内部試験所管理手順", "初期流動管理手順", "工程変更管理手順", "暫定工程管理手順", "APQP手順","PPAP手順","レイアウト図(流れ線図）"] %>
+      <br>
+      <strong><font size="5">手順書</font></strong>
+
+      <%= render partial: "form_timeline", locals: { products: @products, koumoku:koumoku } %>
+      </div>
+		
+   
+    <div class="col-6 center-contents"> 
+  
+      <% koumoku=["本日","計数値MSA報告書", "製造実現可能性検討書", "製造工程設計計画／実績書", "外部提供者評価表", "工程FMEA", "管理図", "ゲージR&R", "工程能力調査表", "IATF内部監査員スキル評価表", "外部提供者管理計画／実績表", "外部提供者品質監査ﾁｪｯｸｼｰﾄ兼是正対策書", "マネジメントレビュー記録"] %>
+      <br>
+      <strong><font size="5">新規見直し</font></strong>
+
+      <%= render partial: "form_timeline", locals: { products: @products, koumoku:koumoku } %>
+	</div>
+<br>
+    <%= link_to '戻る', index_document_path ,class:"btn btn-secondary"%>
+    <br>
+
+
+
+
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

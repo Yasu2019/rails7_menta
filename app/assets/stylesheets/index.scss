@@ -1,0 +1,43 @@
+.example li{
+  float: left;
+  list-style: none;
+  margin: 10px;
+}
+
+.under-element{
+  clear: both;
+}
+
+.inline-block_test {
+  display: inline-block;      /* インラインブロック要素にする */
+  background-color:  rgba(131, 133, 132, 0.384);    /* 背景色指定 */
+  padding:  20px;             /* 余白指定 */
+  height: 50px;              /* 高さ指定 */
+}
+
+.inline-block_test_head {
+  display: inline-block;      /* インラインブロック要素にする */
+  background-color:  #8f918f7a;    /* 背景色指定 */
+  padding:  10px;             /* 余白指定 */
+  height: 80px;              /* 高さ指定 */
+}
+
+table th ,td {
+  border:1px solid;
+  }
+   
+/*　スクロールバーの実装 */
+.table_sticky {
+  display: block;
+  overflow-y: scroll;
+  height: calc(100vh/2);
+  border:1px solid;
+  border-collapse: collapse;
+}
+.table_sticky thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: rgb(165, 165, 164);
+  border-top:#FFFFFF;
+}

@@ -1,0 +1,178 @@
+<p id="notice"><%= notice %></p>
+<head>
+<h1>IATF 文書/記録 データ一覧</h1>
+
+<%= "ユーザーEmailアドレス：   "%>
+<%= @user.email %> <br>
+<%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+<br>
+
+<strong><font size="4"> <%= "検索" %> </font></strong>
+      <%= search_form_for @q,url: index_document_path do |f| %>
+      
+       <div class="container-fluid">
+        <div class="row align-items-start">  
+
+          <div class="col-2">
+            <%= "文書名" %> <br>
+            <%= f.collection_select :documentname_eq, Product.select(:documentname).distinct.order(:documentname), :documentname, :documentname,  include_blank: '指定なし'  %>
+          </div>
+
+          <div class="col-1">
+            <%= "文書番号" %> <br>
+            <%= f.collection_select :documentnumber_eq, Product.select(:documentnumber).distinct.order(:documentnumber), :documentnumber, :documentnumber,  include_blank: '指定なし'  %>
+          </div>
+
+          <div class="col-1">
+            <%= '文書カテゴリー' %><br>
+            <%= f.collection_select :documentcategory_eq, Product.select(:documentcategory).distinct.order(:documentcategory), :documentcategory, :documentcategory,  include_blank: '指定なし'  %>
+          </div>
+          
+          <div class="col-2">
+            <%= f.label :description_cont ,"コメント" %> <br>
+            <%= f.search_field :description_cont %>        
+          </div>
+
+           <div class="col-1">
+            <%= "ステイタス" %> <br>
+            <%= f.collection_select :status_eq, Status.all, :id, :name, include_blank: '指定なし'  %>
+          </div>
+
+          <div class="col-1">
+            <%= '登録日' %> <br>
+            <%= f.date_field :start_time_gteq %>
+            <%="から"%>
+            <%= f.date_field :start_time_lteq_end_of_day %>
+            <%="まで"%>
+          </div>
+
+          <div class="col-1">
+            <%= '完了予定日' %> <br>
+            <%= f.date_field :deadline_at_gteq %>
+            <%="から"%>
+            <%= f.date_field :deadline_at_lteq_end_of_day %>
+            <%="まで"%>
+          </div>
+
+          <div class="col-1">
+            <%= '完了日' %> <br>
+            <%= f.date_field :end_at_gteq %>
+            <%="から"%>
+            <%= f.date_field :end_at_lteq_end_of_day %>
+            <%="まで"%>
+          </div>
+
+         
+
+          <div class="col-1">
+            <br>
+            <%= f.submit '検索',class:"btn btn-secondary" %>
+          </div>
+        </div>
+       </div>
+      <% end %>
+</head>
+
+<div class="container-fluid">
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover table_sticky">
+ 
+  <thead>
+    <tr>
+    
+      <th>ID</th>
+      <th>Doc.Type</th>
+      <th><%= sort_link(@q, :documentname, "文書名") %></th>
+      <th><%= sort_link(@q, :documentnumber, "文書番号") %></th>
+      <th><%= sort_link(@q, :documentcategory, "文書カテゴリー") %></th>
+      <th><%= sort_link(@q, :description, "コメント") %></th>
+      <th><%= sort_link(@q, :start_time, "登録日") %></th>
+      <th><%= sort_link(@q, :deadline_at, "完了予定日") %></th>
+      <th><%= sort_link(@q, :end_at, "完了日") %></th>
+      <th><%= sort_link(@q, :goal_attainment_level, "達成率(%)") %></th>
+      <th><%= sort_link(@q, :status, "ステイタス") %></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th colspan="6">添付資料</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      
+      <th></th>
+      <th></th>
+     
+    </tr>
+  </thead>
+ 
+  <tbody>
+
+    <% @products.each do |pro| %>
+      <% if pro.documenttype=="文書"%>
+
+        <% if pro.status=="完了" %>
+          <% pro.goal_attainment_level=100 %>
+        <% end %>
+    
+        <tr>
+          <td><%= pro.id %></td>
+          <td><%= pro.documenttype %></td>
+          <td><%= pro.documentname %></td>    
+          <td><%= pro.documentnumber %></td>
+          <td><%= pro.documentcategory %></td>
+          <td><%= pro.description %></td>
+          <td><%= l pro.start_time  %></td>
+          <td><%= l pro.deadline_at  %></td>
+          <% if pro.status=="完了" %>
+                <td><%= l pro.end_at  %></td>
+          <% else %>
+                <td><%= "------"  %></td>
+          <% end %>
+          <td><%= pro.goal_attainment_level %></td>
+          <td><%= pro.status %></td>      
+          <td><%= link_to '詳細', pro,class:"btn btn-info" %></td>
+          <td><%= link_to '編集', edit_product_path(pro),data: {"turbolinks" => false},class:"btn btn-warning" %></td>
+          <td><%= link_to '削除', pro, method: :delete, data: { confirm: '本当に削除しますか?' },class:"btn btn-danger" %></td>
+
+          <%= render partial: "attached_file", locals: { pro: pro }  %>
+ 
+        </tr>
+      <% end %>
+    <% end %>
+
+  </tbody>
+</table>
+
+ </div>
+</div>
+
+<br>
+
+<div class=”container>
+   <div class="row align-items-end">
+
+    <div  class="col-2">
+        <br> <%= link_to '新規文書/記録登録', new_document_path,data: {"turbolinks" => false},class:"btn btn-secondary" %>
+    </div>
+
+    <div  class="col-2">
+        <br> <%= link_to '達成度', index7_product_path,data: {"turbolinks" => false},class:"btn btn-secondary" %>
+    </div>
+
+    <div  class="col-2">
+        <br> <%= link_to 'タイムライン', index6_product_path,data: {"turbolinks" => false},class:"btn btn-secondary" %>
+    </div>
+
+    <div  class="col-2">
+    <br>
+    <br>
+    <%= form_with(url: doc_download_product_path, method: :get, local: true) do|form| %>
+    <%= form.submit "Excel出力",class:"btn btn-secondary"%>
+    <% end %>
+    </div>
+
+   </div>
+</div>
+<br>
+<%= link_to '戻る', root_path ,class:"btn btn-secondary"%>

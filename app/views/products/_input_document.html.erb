@@ -1,0 +1,162 @@
+
+<% @product.documenttype='文書' %>
+
+
+<% if @product.start_time==nil %>
+  <% dateset_start_time=Time.now %>
+<% else %>
+  <% dateset_start_time=@product.start_time %>
+<% end %>
+
+<% if @product.deadline_at==nil %>
+  <% dateset_deadline_at=Time.now %>
+<% else %>
+  <% dateset_deadline_at=@product.deadline_at %>
+<% end %>
+
+<% if @product.end_at==nil %>
+  <% dateset_end_at=Time.now %>
+<% else %>
+  <% dateset_end_at=@product.end_at %>
+<% end %>
+
+<%= form_with model: @product, local: true do |form| %>
+
+<%= render 'layouts/error_messages', model: form.object %>
+
+
+<div class=”container>
+   <div class="row align-items-end">
+
+     <div class="col-3">
+     <%= form.label :文書・記録カテゴリーを選択してください %> <br>
+     <%= form.select :documentcategory, [['文書計画', '文書計画'],['プロセス管理図', 'プロセス管理図'], ['規定', '規定'],['フロー', 'フロー'],['手順書', '手順書'],['新規見直し記録', '新規見直し記録'],['営業部','営業部'],['管理部','管理部'],['生産技術部','生産技術部'],['設計部','設計部'],['プレス','プレス'],['表面処理','表面処理'],['品質保証部','品質保証部'],['金型部','金型部'],['内部監査','内部監査'],['購買先管理','購買先管理'],['顧客固有要求事項/外部文書','顧客固有要求事項/外部文書'],['材料仕様書','材料仕様書'],['顧客満足/SPR','顧客満足/SPR'],['スキルマップ','スキルマップ']], { include_blank: '選択してください'}, { id: "phase",required: true } %> 
+     </div>
+
+     
+     <div class="col-3">
+
+     <%= form.label :項目を選択してください %> <br> 
+     <%=  form.select :documentname, [], { include_blank: '選択してください'}, { id: "food" ,required: true} %>
+     </div>
+     
+
+   </div>
+</div>
+
+<br>
+
+<div class=”container>
+   <div class="row align-items-end">
+
+     <!--
+     <div class="col-4">
+       <p>文書名</p> <%= form.text_field :documentname %>  
+     </div>
+     -->
+     
+     <div class="col-4">
+     <p>文書番号</p> <%= form.text_field :documentnumber %>
+     </div>
+
+     <div class="col-4"> 
+     <p>コメント</p> <%= form.text_field :description %> 
+     </div>
+
+   </div>
+</div>
+
+<br>
+
+<div class=”container>
+   <div class="row align-items-end">
+
+     <div class="col-3">
+     <%= form.label :登録日 %> <br>
+     <%= form.date_field :start_time, value: dateset_start_time.strftime("%Y-%m-%d") %>
+     </div>
+
+
+
+     <div class="col-3">
+     <%= form.label :完了予定日 %> <br>
+     <%= form.date_field :deadline_at, value: dateset_deadline_at.strftime("%Y-%m-%d") %>
+     </div>
+
+     <div class="col-3">
+     <%= form.label :完了日 %> <br>
+     <%= form.date_field :end_at, value: dateset_end_at.strftime("%Y-%m-%d") %>
+     </div>
+
+   </div>
+</div>
+
+  <% if @product.status=="完了" %>
+  <% num=100 %>
+  <% else %>
+  <% num=50 %>
+  <% end %>
+
+  <div>
+  <br>
+  <%= form.label :達成度を入力してください %> <br>
+  <%= form.number_field :goal_attainment_level, value: num %>
+  </div>
+
+
+
+  <div>
+  <br>
+  <%= form.label :ステイタスを入力してください %> <br>
+  <%= form.select :status, [['未完', '未完'],['仕掛中', '仕掛中'], ['完了', '完了']], { include_blank: '選択してください'}, { id: "status" ,required: true} %> <br>
+  </div>
+
+  
+  <div>
+  <br>
+  <%= form.label :ドキュメントタイプ %> <br>
+  <%= form.select :documenttype, [['文書', '文書']], { include_blank: '文書'}, { id: "documenttype" } %> <br>
+  </div>
+  
+  <br>
+
+<div class=”container>
+   <div class="row align-items-start">
+
+     <div class="col-4">
+     <% if @product.files.attached? %>
+       <%= form.label :添付ファイルを削除する場合、ㇾチェックしてください %><br>
+          <% @product.files.each do |image| %>
+          <%= form.check_box :detouch, {:multiple => true}, image.id, false  %> 
+          <%= image.blob.filename %> <br>
+       <% end %>
+     <% end %>
+     </div>
+
+     <div class="col-3">
+
+     <% if @product.files.attached? && @Attachment_file %> 
+       <% @product.files.each do |image| %>
+          <%= image.blob.filename %> <br>
+          <%= image_tag image.variant(resize: "100x100") %>
+       <% end %>
+     <% end %>
+     </div>
+  <br>
+
+   </div>
+</div>
+
+
+  <br>
+  <%= form.file_field :files, multiple: true %> 
+  <br>
+  <br>
+  <%= form.submit %> <br>
+  <br>
+  <%= link_to '戻る', index_document_path,class:"btn btn-secondary" %>
+
+<% end %>
+
+
+   

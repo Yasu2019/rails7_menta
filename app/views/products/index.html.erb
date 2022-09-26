@@ -1,0 +1,278 @@
+<p id="notice"><%= notice %></p>
+
+
+
+<head>
+  <h1>IATF APQP / PPAP データ一覧</h1>
+
+ 
+      
+      <div class="col-3">
+        <%= "ユーザーEmailアドレス：   "%>
+        <%= @user.email %> <br>
+        <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+      </div>
+      <br>
+
+      <strong><font size="4"> <%= "検索" %> </font></strong>
+      <%= search_form_for @q do |f| %>
+       <div class="container-fluid">
+        <div class="row align-items-start">  
+
+          <div class="col-1">
+            <%= "図番" %> <br>
+            <%= f.collection_select :partnumber_eq, Product.select(:partnumber).distinct.order(:partnumber), :partnumber, :partnumber,  include_blank: '指定なし'  %>
+          </div>
+
+          <div class="col-1">
+            <%= "材料コード" %> <br>
+            <%= f.collection_select :materialcode_eq, Product.select(:materialcode).distinct.order(:materialcode), :materialcode, :materialcode,  include_blank: '指定なし'  %>
+          </div>
+         
+          <div class="col-1">
+           <%= 'フェーズ' %><br> 
+           <%= f.collection_select :phase_eq, Product.select(:phase).distinct.order(:phase), :phase, :phase,  include_blank: '指定なし'  %>
+          </div>
+
+          <div class="col-2">
+           <%= '項目' %><br> 
+           <%= f.collection_select :food_eq, Product.select(:food).distinct.order(:food), :food, :food,  include_blank: '指定なし'  %>
+          </div>
+
+          <div class="col-1">
+            <%= f.label :food_cont ,"項目" %> <br>
+            <%= f.search_field :food_cont %>        
+          </div>
+
+          <div class="col-1">
+            <%= "ステイタス" %> <br>
+            <%= f.collection_select :status_eq, Status.all, :id, :name, include_blank: '指定なし'  %>
+          </div>
+
+          <div class="col-1">
+            <%= '登録日' %> <br>
+            <%= f.date_field :start_time_gteq %>
+            <%="から"%>
+            <%= f.date_field :start_time_lteq_end_of_day %>
+            <%="まで"%>
+          </div>
+
+          <div class="col-1">
+            <%= '完了予定日' %> <br>
+            <%= f.date_field :deadline_at_gteq %>
+            <%="から"%>
+            <%= f.date_field :deadline_at_lteq_end_of_day %>
+            <%="まで"%>
+          </div>
+
+          <div class="col-1">
+            <%= '完了日' %> <br>
+            <%= f.date_field :end_at_gteq %>
+            <%="から"%>
+            <%= f.date_field :end_at_lteq_end_of_day %>
+            <%="まで"%>
+          </div>
+
+          
+
+          <div class="col-1">
+            <br>
+            <%= f.submit '検索',class:"btn btn-secondary" %>
+          </div>
+        </div>
+       </div>
+      <% end %>
+
+
+</head>
+
+<br>
+<div class="container-fluid">
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover table_sticky">
+
+ 
+  
+
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Doc.Type</th>
+      <th><%= sort_link(@q, :partnumber, "図番") %></th>
+      <th><%= sort_link(@q, :materialcode, "材料コード") %></th>
+      <th><%= sort_link(@q, :phase, "フェーズ") %></th>
+      <th><%= sort_link(@q, :food, "項目") %></th>
+      <th><%= sort_link(@q, :description, "コメント") %></th>
+      <th><%= sort_link(@q, :start_time, "登録日") %></th>
+      <th><%= sort_link(@q, :deadline_at, "完了予定日") %></th>
+      <th><%= sort_link(@q, :end_at, "完了日") %></th>
+      <th><%= sort_link(@q, :goal_attainment_level, "達成度(%)") %></th>
+      <th><%= sort_link(@q, :status, "ステイタス") %></th>
+      
+      <th></th>
+      <th></th>
+      <th></th>
+      <th colspan="6">添付資料</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+     
+     
+  
+    
+    </tr>
+  </thead>
+ 
+  <tbody>
+
+    <% @products.each  do |pro| %>
+      <% if pro.documenttype=="製品"%>
+   
+    
+
+        <% if pro.status=="完了" %>
+          <% pro.goal_attainment_level=100 %>
+        <% end %>
+   
+        <tr>
+          <td><%= pro.id %></td>
+          <td><%= pro.documenttype %></td>
+          <td><%= pro.partnumber %></td>
+          <td><%= pro.materialcode %></td>
+          <td><%= pro.phase %></td>
+          <td><%= pro.food %></td>
+          <td><%= pro.description %></td>
+          <td><%= l pro.start_time  %></td>
+          <td><%= l pro.deadline_at  %></td>
+          <% if pro.status=="完了" %>
+              <td><%= l pro.end_at  %></td>
+          <% else %>
+              <td><%= "------"  %></td>
+          <% end %>
+          <td><%= pro.goal_attainment_level %></td>
+          <td><%= pro.status %></td>
+
+          
+          <td><%= link_to '詳細', pro,class:"btn btn-info" %></td>
+          <td><%= link_to '編集', edit_product_path(pro),data: {"turbolinks" => false},class:"btn btn-warning" %></td>
+          <td><%= link_to '削除', pro, method: :delete, data: { confirm: '本当に削除しますか?' },class:"btn btn-danger" %></td>
+ 
+          <%= render partial: "attached_file", locals: { pro: pro }  %>
+ 
+        </tr>
+      <% end %>
+    <% end %>
+  
+
+  </tbody>
+</table>
+
+ </div>
+</div>
+
+<br>
+
+
+<br>
+
+
+<div class=”container-fluid”>
+   <div class="row align-items-end">
+   
+
+    <div  class="col-2">
+    <br> <%= link_to '新規製品登録', new_product_path,data: {"turbolinks" => false},class:"btn btn-secondary" %>
+    </div>
+
+    <div  class="col-2">
+    <%= form_with(url: index2_product_path, method: :get, local: true) do|form| %>
+    <%= form.label :"図番選択" %> <br>
+    <% @produc=Product.select(:partnumber).distinct.order(:partnumber) %>
+    <%= form.collection_select(:partnumber, @produc, :partnumber, :partnumber)%> 
+    <%= form.submit "APQP・PPAP一覧表示 (図番毎)",class:"btn btn-secondary"%>
+    <% end %>
+    </div>
+
+    <div  class="col-2">
+    <%= form_with(url: index8_product_path, method: :get, local: true) do|form| %>
+    <%= form.label :"図番選択" %> <br>
+    <% @produc=Product.select(:partnumber).distinct.order(:partnumber) %> 
+    <%= form.collection_select(:partnumber, @produc, :partnumber, :partnumber)%> <br>
+    <%= form.submit "達成度 (図番毎)",class:"btn btn-secondary"%>
+    <% end %>
+    </div>
+
+    <div  class="col-2">
+    <br>
+    <br>
+    <%= form_with(url: index3_product_path, method: :get, local: true) do|form| %>
+    <%= form.submit "全アイテム進捗一覧表",class:"btn btn-secondary"%>
+    <% end %>
+    </div>
+
+    <div  class="col-1">
+    <br>
+    <br>
+    <%= form_with(url: index9_product_path, method: :get, local: true) do|form| %>
+    <%= form.submit "全アイテム日程表",class:"btn btn-secondary"%>
+    <% end %>
+    </div>
+
+    <div  class="col-1">
+    <br>
+    <br>
+    
+    <%= form_with(url: download_product_path, method: :get, local: true) do|form| %>
+    <%= form.submit "Excel出力",class:"btn btn-secondary" %>
+    <% end %>
+    </div>
+
+
+    <div  class="col-1">
+    <%= form_with(url: process_design_download_path, method: :get, local: true) do|form| %>
+    <%= form.label :"図番選択" %> <br>
+    <% @produc=Product.select(:partnumber).distinct.order(:partnumber) %> 
+    <%= form.collection_select(:partnumber, @produc, :partnumber, :partnumber)%> <br>
+    <%= form.submit "製造工程設計計画/達成度報告書",class:"btn btn-secondary"%>
+    <% end %>
+    </div>
+    
+
+
+
+
+
+   
+    
+    <!--
+    <div  class="col-2">
+    <br>
+    <%= form_with(url: index4_product_path, method: :get, local: true) do|form| %>
+    <%= form.submit "各フェーズ説明ページ",class:"btn btn-secondary"%>
+    <% end %>
+    </div>
+
+    
+    <div  class="col-2">
+    <br>
+    <%= form_with(url: index_document_path, method: :get, local: true) do|form| %>
+    <%= form.submit "文書/記録一覧ページ",class:"btn btn-secondary"%>
+    <% end %>
+    </div>
+    -->
+
+   
+     
+     
+
+  </div>
+</div>
+
+ 
+
+<br>
+     <%= link_to '戻る', root_path ,class:"btn btn-secondary"%>

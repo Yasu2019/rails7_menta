@@ -1,0 +1,686 @@
+<p id="notice"><%= notice %></p>
+
+<h1>IATF APQP / PPAP 進捗状況</h1>
+
+<!--
+<p>ユーザーEmailアドレス： </p>
+<%= @user.email %> <br>
+<%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+-->
+
+<div class="tabs">
+
+  <input id="phase1" type="radio" name="tab_item" checked>
+  <label class="tab_item" for="phase1">フェーズ1</label>
+
+  <input id="phase2" type="radio" name="tab_item">
+  <label class="tab_item" for="phase2">フェーズ2</label>
+
+  <input id="phase3" type="radio" name="tab_item">
+  <label class="tab_item" for="phase3">フェーズ3</label>
+
+  <input id="phase4" type="radio" name="tab_item">
+  <label class="tab_item" for="phase4">フェーズ4</label>
+
+   <input id="phase5" type="radio" name="tab_item">
+  <label class="tab_item" for="phase5">フェーズ5</label>
+
+   <input id="PPAP" type="radio" name="tab_item">
+  <label class="tab_item" for="PPAP">PPAP</label>
+
+
+
+  <div class="tab_content" id="phase1_content">
+    <div class="tab_content_description">
+      <p class="c-txtsp">
+
+
+
+
+<table>
+  <thead>
+    <tr>
+    <table border="1">
+    </tr>
+
+    <tr>
+      
+      
+      <th>ID</th>
+      <th>図番</th>
+      <th>顧客の声</th>
+      <th>事業計画・マーケティング戦略</th>
+      <th>製品・製造工程のベンチマークデータ</th>
+      <th>製品・製造工程の前提条件</th>
+      <th>製品の信頼性調査</th>
+      <th>顧客インプット</th>
+      <th>設計目標</th>
+      <th>信頼性目標・品質目標</th>
+      <th>暫定材料明細表</th>
+      <th>暫定プロセスマップフロー図</th>
+      <th>特殊製品特性・特殊プロセス特性の暫定リスト</th>
+      <th>製品保証計画書</th>
+      <th>経営者の支援</th>
+      
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    <% @products.each do |pro| %>
+      <tr>
+        
+        <td><%= pro.id %></td>
+        <td><%= pro.partnumber %></td>
+        <% if pro.food=="顧客の声" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="顧客の声" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+        
+
+        
+        <% if pro.food=="事業計画・マーケティング戦略" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="事業計画・マーケティング戦略" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        
+        <% end %>
+        
+
+        
+        <% if pro.food=="製品・製造工程のベンチマークデータ" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="製品・製造工程のベンチマークデータ" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+        
+
+        
+        <% if pro.food=="製品・製造工程の前提条件" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="製品・製造工程の前提条件" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+        
+        
+        
+        <% if pro.food=="製品の信頼性調査" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="製品の信頼性調査" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+        
+        
+        
+        <% if pro.food=="顧客インプット" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="顧客インプット" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+        
+
+        
+        <% if pro.food=="設計目標" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="設計目標" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+        
+
+        
+        <% if pro.food=="信頼性目標・品質目標" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="信頼性目標・品質目標" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+        
+
+        
+        <% if pro.food=="暫定材料明細表" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="暫定材料明細表" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+        
+
+        
+        <% if pro.food=="暫定プロセスマップフロー図" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="暫定プロセスマップフロー図" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+        
+
+        
+        <% if pro.food=="特殊製品特性・特殊プロセス特性の暫定リスト" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="特殊製品特性・特殊プロセス特性の暫定リスト" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+        
+
+        
+        <% if pro.food=="製品保証計画書" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="製品保証計画書" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+        
+
+        
+        <% if pro.food=="経営者の支援" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="経営者の支援" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+        
+      </tr>
+    <% end %>
+    
+    
+  </tbody>
+</table>
+
+
+</p>
+</div>
+</div>
+  
+  <div class="tab_content" id="phase2_content">
+    <div class="tab_content_description">
+      <p class="c-txtsp">
+      
+<table>
+  <thead>
+    <tr>
+    <table border="1">
+    </tr>
+
+    <tr>
+      <th>図番</th>
+      <th>設計故障モード影響解析（DFMEA）</th>
+      <th>製造性・組立性を考慮した設計</th>
+      <th>設計検証</th>
+      <th>デザインレビュー</th>
+      <th>試作コントロールプラン</th>
+      <th>図面（数学的データを含む）</th>
+      <th>技術仕様書</th>
+      <th>材料仕様書</th>
+      <th>図面・仕様書の変更</th>
+      <th>特殊製品特性・特殊プロセス特性</th>
+      <th>ゲージ・試験装置の要求事項</th>
+      <th>実現可能性検討報告書および経営者の支援</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @products.each do |pro| %>
+      <tr>
+        <td><%= pro.partnumber %></td>
+
+        <% if pro.food=="設計故障モード影響解析（DFMEA）" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="設計故障モード影響解析（DFMEA）" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="製造性・組立性を考慮した設計" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="製造性・組立性を考慮した設計" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="設計検証" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="設計検証" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="デザインレビュー" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="デザインレビュー" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="試作コントロールプラン" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="試作コントロールプラン" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="図面（数学的データを含む）" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="図面（数学的データを含む）" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="技術仕様書" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="技術仕様書" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="材料仕様書" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="材料仕様書" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="図面・仕様書の変更" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="図面・仕様書の変更" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="特殊製品特性・特殊プロセス特性" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="特殊製品特性・特殊プロセス特性" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="ゲージ・試験装置の要求事項" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="ゲージ・試験装置の要求事項" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="実現可能性検討報告書および経営者の支援" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="実現可能性検討報告書および経営者の支援" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        </tr>
+    <% end %>
+
+  </tbody>
+</table>
+
+      
+      </p>
+    </div>
+  </div>
+
+  <div class="tab_content" id="phase3_content">
+    <div class="tab_content_description">
+      <p class="c-txtsp">
+
+<table>
+  <thead>
+    <tr>
+    <table border="1">
+    </tr>
+
+    <tr>
+      
+      <th>図番</th>
+      <th>梱包規格・仕様書</th>
+      <th>製品・プロセスの品質システムのレビュー</th>
+      <th>プロセスフロー図</th>
+      <th>フロアプランレイアウト</th>
+      <th>特性マトリクス</th>
+      <th>プロセス故障モード影響解析（PFMEA）</th>
+      <th>先行生産（Pre-launch,量産試作）コントロールプラン</th>
+      <th>プロセス指示書</th>
+      <th>測定システム解析計画書</th>
+      <th>工程能力予備調査計画書</th>
+      <th>経営者の支援</th>
+      
+    </tr>
+
+  </thead>
+  <tbody>
+   
+    <% @products.each do |pro| %>
+      <tr>
+        <td><%= pro.partnumber %></td>
+      
+        <% if pro.food=="梱包規格・仕様書" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="梱包規格・仕様書" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="製品・プロセスの品質システムのレビュー" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="製品・プロセスの品質システムのレビュー" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="プロセスフロー図" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="プロセスフロー図" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="フロアプランレイアウト" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="フロアプランレイアウト" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="特性マトリクス" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="特性マトリクス" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="プロセス故障モード影響解析（PFMEA）" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="プロセス故障モード影響解析（PFMEA）" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="先行生産（Pre-launch,量産試作）コントロールプラン" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="先行生産（Pre-launch,量産試作）コントロールプラン" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="プロセス指示書" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="プロセス指示書" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="測定システム解析計画書" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="測定システム解析計画書" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        
+
+        <% if pro.food=="工程能力予備調査計画書" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="工程能力予備調査計画書" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="経営者の支援" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="経営者の支援" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+      </tr>
+    <% end %>
+
+  </tbody>
+</table>
+
+    
+      </p>
+    </div>
+  </div>
+
+   
+  <div class="tab_content" id="phase4_content">
+    <div class="tab_content_description">
+      <p class="c-txtsp">
+      
+      
+<table>
+  <thead>
+    <tr>
+    <table border="1">
+    </tr>
+    <tr>
+      <th>図番</th>
+      <th>実質的生産</th>
+      <th>測定システム解析</th>
+      <th>工程能力予備調査</th>
+      <th>生産部品承認(PPAP)</th>
+      <th>量産の妥当性確認試験</th>
+      <th>梱包評価</th>
+      <th>量産コントロールプラン</th>
+      <th>品質計画承認署名</th>
+    </tr>
+
+  </thead>
+  <tbody>
+   
+    <% @products.each do |pro| %>
+    
+      <tr>
+
+        <td><%= pro.partnumber %></td>
+     
+        <% if pro.food=="実質的生産" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="実質的生産" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="測定システム解析" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="測定システム解析" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="工程能力予備調査" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="工程能力予備調査" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="生産部品承認(PPAP)" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="生産部品承認(PPAP)" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="量産の妥当性確認試験" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="量産の妥当性確認試験" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="梱包評価" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="梱包評価" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="量産コントロールプラン" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="量産コントロールプラン" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="品質計画承認署名" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="品質計画承認署名" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+      </tr>
+    <% end %>
+
+  </tbody>
+</table>
+      
+      </p>
+       </div>
+    </div>
+
+    <div class="tab_content" id="phase5_content">
+    <div class="tab_content_description">
+      <p class="c-txtsp"> 
+      
+      
+<table>
+  <thead>
+    <tr>
+    <table border="1">
+    </tr>
+
+    <tr>
+      <th>図番</th>
+      <th>変動の減少</th>
+      <th>顧客満足の向上</th>
+      <th>引渡しおよびサービスの改善</th>
+      <th>学んだ教訓・ベストプラクティスの効果的な利用</th>
+
+    </tr>
+
+  </thead>
+
+  <tbody>
+   
+    <% @products.each do |pro| %>
+    
+      <tr>
+
+  
+        <td><%= pro.partnumber %></td>
+
+        <% if pro.food=="変動の減少" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="変動の減少" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="顧客満足の向上" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="顧客満足の向上" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="引渡しおよびサービスの改善" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="引渡しおよびサービスの改善" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+
+        <% if pro.food=="学んだ教訓・ベストプラクティスの効果的な利用" && pro.status=="完了"  %>
+          <td> <font size="7" color="blue"> <%=  @mark_complate  %> </font> </td>
+        <% elsif pro.food=="学んだ教訓・ベストプラクティスの効果的な利用" && pro.status=="仕掛中"%>
+          <td><font size="7" color="yellow"> <%= @mark_WIP %> </font> </td>
+        <% else %>
+          <td><font size="7" color="red"> <%= "-" %> </font> </td>
+        <% end %>
+      </tr>
+
+
+
+    <% end %>
+
+  </tbody>
+</table>
+
+      
+      
+           </p>
+    </div>
+    </div>
+
+    <div class="tab_content" id="PPAP_content">
+    <div class="tab_content_description">
+      <p class="c-txtsp">      </p>
+
+
+
+    </div>
+    </div>
+
+</div><!--   一番最初のdiv -->
+
+<br>
+<%= paginate @products %> <br>
+
+<%= link_to '戻る', products_path %>

@@ -1,0 +1,68 @@
+
+
+<div class="container-fruid">
+  <div class="table-responsive">
+    <table class="table table-bordered">
+
+  <thead>
+    <tr>
+     <table border="1"> 
+     
+     <th>ID</th>
+     <th>Doc.Type</th>
+     <th>文書名</th>
+     <th>文書番号</th>
+     <th>文書カテゴリー</th>
+     <th>コメント</th>
+     <th>登録日</th>
+     <th>完了予定日</th>
+     <th>完了日</th>
+     <th>達成度(%)</th>
+     <th>ステイタス</th>
+  
+    </tr>
+  </thead>
+
+  <tbody>    
+        <% sonzai= false %>
+        <% products.each do |pro| %>
+          <% if pro.documentcategory==dc %>
+            <% if sonzai==true %>
+              <tr>
+            <% end %>
+            <% sonzai=true %>
+            <td><%= pro.id %></td>
+            <td><%= pro.documenttype %></td>
+            <td><%= pro.documentname %></td>    
+            <td><%= pro.documentnumber %></td>
+            <td><%= pro.documentcategory %></td>
+            <td><%= pro.description %></td>
+  
+            <td><%= l pro.start_time  %></td>
+            <td><%= l pro.deadline_at  %></td>
+            <% if pro.status=="完了" %>
+              <td><%= l pro.end_at  %></td>
+            <% else %>
+              <td><%= "------"  %></td>
+            <% end %>
+            <td><%= @product.goal_attainment_level %></td>
+            <td><%= pro.status %></td>
+
+            <td><%= link_to '詳細', pro ,class:"btn btn-info"%></td>
+            <td><%= link_to '編集', edit_product_path(pro) ,class:"btn btn-warning"%></td>
+            <td><%= link_to '削除', pro, method: :delete, data: { confirm: '本当に削除しますか?' },class:"btn btn-danger" %></td>
+
+            <%= render partial: "attached_file", locals: { pro: pro }  %>
+        
+          <% end %>
+        <% end %>          
+      </tr>
+     
+    </tbody>
+  </table>
+
+  </div>
+</div>
+
+<br>
+<%= link_to '戻る', index_document_path ,class:"btn btn-secondary"%>

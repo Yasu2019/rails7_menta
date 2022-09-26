@@ -1,0 +1,184 @@
+<h1>詳細</h1>
+
+<% if @product.documenttype=="製品"%>
+  <table>
+    <thead>
+      <tr>
+      <table border="1">
+        <th>ID</th>
+        <th>Doc.Type</th>
+        <th>図番</th>
+        <th>材料コード</th>
+        <th>フェーズ</th>
+        <th>項目</th>
+        <th>コメント</th>
+        <th>登録日</th>
+        <th>完了予定日</th>
+        <th>完了日</th>
+        <th>達成度(%)</th>
+        <th>ステイタス</th>   
+      </tr>
+    </thead>
+
+    <tbody>
+        <% if @product.status=="完了" %>
+          <% @product.goal_attainment_level=100 %>
+        <% end %>
+    
+        <tr>
+          <td><%= @product.id %></td>
+          <td><%= @product.documenttype %></td>
+          <td><%= @product.partnumber %></td>
+          <td><%= @product.materialcode %></td>
+          <td><%= @product.phase %></td>
+          <td><%= @product.food %></td>
+          <td><%= @product.description %></td>
+          <td><%= l @product.start_time  %></td>
+          <td><%= l @product.deadline_at  %></td>
+          <% if @product.status=="完了" %>
+                <td><%= l @product.end_at  %></td>
+              <% else %>
+                <td><%= "------"  %></td>
+              <% end %>
+          <td><%= @product.goal_attainment_level %></td>
+          <td><%= @product.status %></td>
+          <%= render partial: "attached_file", locals: { pro: @product }  %>      
+        </tr> 
+    </tbody>
+  </table>
+
+  <br>  
+  <br>
+
+    <p>
+    <strong>画像:</strong>
+    <% if @product.files.attached? && @Attachment_file %>
+         <% @product.files.each do |image| %>
+           <% fullfilename = rails_blob_path(image) %>
+           <% @ext = File.extname(fullfilename).downcase %>
+           <% if @ext== ".jpg" ||  @ext== ".jpeg" ||  @ext== ".png" ||  @ext== ".gif" %> 
+                 <br>
+                 <%= image.blob.filename %> <br>
+                 <%= image_tag image.variant(resize: "200x200") %>
+           <% end %>
+         <% end %>
+    <%else%>
+      <strong>無し </strong> <br>
+    <% end %>
+
+    <br><br>
+    <% if @product.files.attached? %>
+         <% @product.files.each do |image| %> 
+           <% fullfilename = rails_blob_path(image) %>
+           <% ext= File.extname(fullfilename).downcase %>
+         <% end %>
+    <% end %>
+      <strong>ダウンロード:</strong>
+      <br>
+
+    <% if @product.files.attached? %>
+         <% @product.files.each do |image| %> 
+           <%= link_to image.blob.filename  ,rails_blob_path(image)%> <br>
+         <% end %>
+
+    <% end %>
+    </p>
+
+  <%= link_to '戻る', products_path ,class:"btn btn-secondary"%>
+
+<% else %>
+
+<table>
+  <thead>
+  
+    <tr>
+    <table border="1">
+      <th>ID</th>
+      <th>Doc.Type</th>
+      <th>文書名</th>
+      <th>文書番号</th>
+      <th>文書カテゴリー</th>
+      <th>コメント</th>
+      <th>登録日</th>
+      <th>完了予定日</th>
+      <th>完了日</th>
+      <th>達成度(%)</th>
+      <th>ステイタス</th>  
+      
+    </tr>
+  </thead>
+
+  <tbody>
+      <% if @product.status=="完了" %>
+        <% @product.goal_attainment_level=100 %>
+      <% end %>
+    
+      <tr>
+        <td><%= @product.id %></td>
+        <td><%= @product.documenttype %></td>
+        <td><%= @product.documentname %></td>    
+        <td><%= @product.documentnumber %></td>
+        <td><%= @product.documentcategory %></td>
+        <td><%= @product.description %></td>
+        <td><%= l @product.start_time  %></td>
+        <td><%= l @product.deadline_at  %></td>
+        <% if @product.status=="完了" %>
+              <td><%= l @product.end_at  %></td>
+            <% else %>
+              <td><%= "------"  %></td>
+            <% end %>
+        <td><%= @product.goal_attainment_level %></td>
+        <td><%= @product.status %></td>
+       <%= render partial: "attached_file", locals: { pro: @product }  %>
+      </tr> 
+  </tbody>
+</table>
+
+<br>
+  
+  <p>
+  <strong>画像:</strong>
+  <% if @product.files.attached? && @Attachment_file %>
+       <% @product.files.each do |image| %>
+         <% fullfilename = rails_blob_path(image) %>
+         <% @ext = File.extname(fullfilename).downcase %>
+           <% if @ext== ".jpg" ||  @ext== ".jpeg" ||  @ext== ".png" ||  @ext== ".gif" %> 
+               <br>
+               <%= image.blob.filename %> <br>
+               <%= image_tag image.variant(resize: "200x200") %>
+           <% end %>
+       <% end %>
+  <%else%>
+    <strong>無し </strong> <br>
+  <% end %>
+  <br><br>
+  
+  </p>
+  <p>
+  <% if @product.files.attached? %>
+       <% @product.files.each do |image| %> 
+         <% fullfilename = rails_blob_path(image) %>
+         <% ext= File.extname(fullfilename).downcase %>
+       <% end %>
+  <% end %>
+    <strong>ダウンロード:</strong>
+    <br>
+
+  <% if @product.files.attached? %>
+       <% @product.files.each do |image| %> 
+         <%= link_to image.blob.filename  ,rails_blob_path(image)%> <br>
+       <% end %>
+
+  <% end %>
+  </p>
+
+<%= link_to '戻る', index_document_path ,class:"btn btn-secondary"%>
+
+<% end %>
+
+
+
+
+
+
+

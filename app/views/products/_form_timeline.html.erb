@@ -1,0 +1,43 @@
+
+
+
+
+       <% timeline1=[] %>
+       <% timeline2=[] %>
+
+       <% koumoku.each do |koumo| %>
+        <% ti=0 %>
+          <% products.each do |pro| %>
+             <% if koumo=="本日"%>
+               <% timeline1=[koumo,Time.now.strftime("%Y-%m-%d"),Time.now.strftime("%Y-%m-%d")]%>
+               <% ti=1 %>
+             <% end %>
+             <% if pro.documentname==koumo %>
+               <% timeline1=[pro.documentname,pro.start_time.strftime("%Y-%m-%d"),pro.deadline_at.strftime("%Y-%m-%d")]%>
+               <% ti=1 %>
+             <% end %>
+          <% end %>
+          <% if ti==0 %>
+            <% timeline1=[koumo]%>
+          <% end %>
+          <% timeline2.push(timeline1) %>
+        
+        <% end %>
+
+
+  
+<div class="container-fluid">
+  <div class="row">
+
+   <div class="col-12 center-contents">
+     <%= timeline timeline2 ,width: "900px",  height: "800px",xtitle: "日付", ytitle: "項目" %>
+   </div>
+
+  </div>
+ 
+</div>
+
+
+<br>
+
+<br>
