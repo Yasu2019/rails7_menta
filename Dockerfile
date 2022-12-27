@@ -11,8 +11,10 @@ RUN apt-get install vim -y
 
 RUN mkdir /myapp
 WORKDIR /myapp
+
 COPY Gemfile /myapp/Gemfile
 COPY Gemfile.lock /myapp/Gemfile.lock
+
 RUN apt-get update && apt-get install -y libvips42
 #RUN apt-get update
 RUN gem install bundler
