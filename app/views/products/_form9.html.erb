@@ -31,18 +31,22 @@
   <% input_aru=0 %>
     <% unless pro.partnumber==partnumber  %>
 
+    <%  jyunban=jyunban.sort.reverse %>
+
      <!--
      <%= koumoku.sort.reverse %>
      新しくkoumokuを増やす場合は、index３の順番を、上記koumoku.sort.revrseと同じ順番になるように調整すること
-      -->
+      
       <%  jyunban=jyunban.zip(sta,deaddate,enddate).sort! %>
-      <!-- sortの後に!をつけると、配列自体が変更される
+       sortの後に!をつけると、配列自体が変更される
        jyunbanは、2次元配列に変換されている為、下でjyunとsで表現できる 
       -->
       <% koumoku.each do |koumo| %>
       <% input_aru=0 %>
         <% catch(:out) do %>
-          <% jyunban.each do |jyun,s,d,e| %>
+          <% jyunban.zip(sta).each do |jyun,s,d,e| %>
+          
+          
             <% if jyun==koumo && s=="完了" %>
               <% input_ari=1 %>
                <td> <center><font size="4" color="blue"> <%=  d.strftime('%y/%m/%d') %> </font></center></td>
@@ -99,40 +103,41 @@
   
 
   <%jyunban=jyunban.zip(sta).sort%>
-  
+  -->
  
-
+  <%jyunban==jyunban.sort.reverse%>
   <% koumoku.each do |koumo| %>
         <% input_aru=0 %>
         <% catch(:out_break) do %>
         
-
-              <% jyunban.zip(sta).each do |jyun,s| %>
+              
+              
+               <% jyunban.zip(sta).each do |jyun,s,d,e| %>
               
                 <% if jyun==koumo && s=="完了" %>
                   <% input_ari=1 %>
                   
-                  <td> <center><font size="4" color="blue"> <%=  @mark_complate  %> </font></center></td>
-                 
-                 
-
-
-                       <% throw :out_break %>  
+                  <td> <center><font size="4" color="blue"> <%=  d.strftime('%y/%m/%d') %> </font></center></td>
+                  <td> <center><font size="4" color="blue"> <%=  e.strftime('%y/%m/%d')  %> </font></center></td>
+                  <% throw :out_break %>  
                 <% end %>
                 <% if jyun==koumo && s=="仕掛中" %>
                   <% input_ari=1 %>
-                  <td> <center><font size="3" color="blue"> <%=  @mark_WIP  %> </font></center></td>
-                       <% throw :out_break %>  
+                 <td> <center><font size="3" color="magenta"> <%=  d.strftime('%y/%m/%d')  %> </font></center></td>
+                 <td><strong><center><font size="4" color="red"> <%= "　━　" %> </font></center></strong></td>
+                  <% throw :out_break %>  
                 <% end %>
               <% end %>
             
-              <% if input_ari=0 %> 
-                 <td><center><font size="4" color="red"> <%= "-" %> </font></center></td>
+              
+              <% if input_ari=0 %>
+                  <td><strong><center><font size="4" color="red"> <%= "　━　" %> </font></center></strong></td>
+                  <td><strong><center><font size="4" color="red"> <%= "　━　" %> </font></center></strong></td>
               <% end %>
         <% end %>
   <% end %>
   
-  -->
+  
 
   </tbody>
 </table>

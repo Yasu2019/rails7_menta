@@ -236,6 +236,7 @@ class ProductsController < ApplicationController
       #  .where(date: @date_from..@date_to)
       #  .order(:date)
     render 'data_doc_download.xls.erb'
+    #render 'products/data_doc_download'
     
   end
 
@@ -243,8 +244,8 @@ class ProductsController < ApplicationController
     response.headers["Content-Type"] = "application/excel"
     response.headers["Content-Disposition"] = "attachment; filename=\"製造工程設計計画書／実績書.xls\""
     @products = Product.where(partnumber:params[:partnumber])
-    render 'process_design_download.xls.erb'
-    
+    render "process_design_download.xls.erb"
+    #render 'products/process_design_download'
   end
 
   
